@@ -1,12 +1,24 @@
+import { StorageHelper } from "../../core/utils/storageHelper";
 import { IOrder } from "../domain/Models/Order";
 import { OrderService } from "../infrastructure/services/orders.service";
 
 export class OrderUseCase {
-  private static orders: IOrder[] | null;
+  private orders: IOrder[] | null;
+
+  constructor() {
+    this.orders = [];
+  }
 
   async getOrders(RequestService: OrderService) {
-    OrderUseCase.orders = await RequestService.getOrders();
-    return this.mapOrders(OrderUseCase.orders)
+    const savedOrders = StorageHelper.get('Orders')
+    if (savedOrders) {
+      return savedOrders
+    } else {
+      this.orders = await RequestService.getOrders();
+      const mappedOrders = this.mapOrders(this.orders)
+      StorageHelper.save('Orders', mappedOrders);
+      return mappedOrders;
+    }
   }
 
   private mapOrders(orders: IOrder[] | null): IOrder[] {
