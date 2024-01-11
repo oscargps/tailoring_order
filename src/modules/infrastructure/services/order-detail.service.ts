@@ -1,5 +1,6 @@
 
 import { SupaBaseClient } from "../../../core/utils/supabaseClient";
+import { IOrderDetailsDTO } from "../../domain/Models/Order";
 
 
 export class OrderDetailService {
@@ -23,7 +24,7 @@ export class OrderDetailService {
             element_gender:order_by_element_element_gender_fkey (id, literal_name ),
             element_size:order_by_element_element_size_fkey (id, literal_name )
           `).eq('order_id', orderId);
-            return data;
+            return data as IOrderDetailsDTO[];
         } catch (error) {
             throw error;
         }

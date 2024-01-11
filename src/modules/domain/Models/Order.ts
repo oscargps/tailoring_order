@@ -5,6 +5,18 @@ import { IStage } from "./Stages";
 
 export interface IOrder {
     id: string,
+    order_client_id: string,
+    order_client: string,
+    order_stage_id: string,
+    order_stage: string,
+    order_owner: string,
+    order_release: string | null,
+    order_description: string,
+    created_at: string,
+    order_by_event?: IOrderByEvent[]
+}
+export interface IOrderDto {
+    id: string,
     order_client: string,
     order_stage: string,
     order_owner: string,

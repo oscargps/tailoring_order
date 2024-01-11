@@ -1,6 +1,5 @@
 import { OrderUseCase } from "../../bussines/order.usecase";
 import { OrderService } from "../services/orders.service";
-
 export class OrderController {
 
     private static orderService: OrderService;
