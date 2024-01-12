@@ -23,7 +23,7 @@ export class OrderDetailService {
             element_description,
             element_gender:order_by_element_element_gender_fkey (id, literal_name ),
             element_size:order_by_element_element_size_fkey (id, literal_name )
-          `).eq('order_id', orderId);
+          `).eq('order_id', orderId).throwOnError();
             return data as IOrderDetailsDTO[];
         } catch (error) {
             throw error;
