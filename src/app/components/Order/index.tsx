@@ -17,11 +17,13 @@ import { useCallback, useMemo, useState } from "react";
 import { SearchIcon } from "../Icons/SearchIcon";
 import { IOrder } from "../../../modules/domain/Models/Order";
 import OrderEventsModal from "./OrderEventsModal";
+import { useNavigate } from "react-router-dom";
 
 function Orders() {
     const [filterValue, setFilterValue] = useState("");
     const [selectedOrder, setSelectedOrder] = useState<IOrder | undefined>(undefined);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const navigate = useNavigate()
 
     const {
         data
@@ -53,8 +55,8 @@ function Orders() {
                         onValueChange={onSearchChange}
                     />
                     <div className="flex gap-3">
-                        <Button color="primary" endContent={<PlusIcon />}>
-                            Add New
+                        <Button color="primary" endContent={<PlusIcon />} onPress={ ()=>(navigate('/new-order')) }>
+                            Nueva Orden
                         </Button>
                     </div>
                 </div>
