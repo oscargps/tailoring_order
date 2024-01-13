@@ -11,6 +11,16 @@ export class StorageHelper {
         }
 
     }
+    static remove(key: string) {
+
+        const data = localStorage.getItem(key);
+        if (data) {
+            return localStorage.removeItem(key);
+        } else {
+            return false
+        }
+
+    }
 
     static save(key: string, data: any) {
         const dataToSave = JSON.stringify(data);

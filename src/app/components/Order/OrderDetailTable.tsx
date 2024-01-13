@@ -30,17 +30,17 @@ const OrderDetailTable = (props: Props) => {
         switch (columnKey) {
 
             case "element_size":
-                return Literals.find((literal) => literal.id == cellValue)?.literal_name
+                return Literals.length ? Literals.find((literal) => literal.id == cellValue)?.literal_name : cellValue
 
             case "element_gender":
-                return Literals.find((literal) => literal.id == cellValue)?.literal_name
+                return Literals.length ? Literals.find((literal) => literal.id == cellValue)?.literal_name : cellValue
 
             case "model_id":
-                return Models.find((model) => model.id == cellValue)?.model_name
+                return Models.length ? Models.find((model) => model.id == cellValue)?.model_name : cellValue
             default:
                 return cellValue;
         }
-    }, [data]);
+    }, [data, Literals, Models]);
 
     return (
         <>

@@ -17,9 +17,9 @@ export interface IOrder {
 }
 export interface IOrderDto {
     id: string,
-    order_client: string,
-    order_stage: string,
-    order_owner: string,
+    order_client: number,
+    order_stage: number,
+    order_owner: number,
     order_release: string | null,
     order_description: string,
     created_at: string,
@@ -29,30 +29,38 @@ export interface IOrderDto {
 }
 
 interface IOrderByEvent {
-    id: string
-    order_id: string
-    order_stage_from: string
-    order_stage_to: string
-    event_owner?: string
+    id: number
+    order_id: number
+    order_stage_from: number
+    order_stage_to: number
+    event_owner?: number
     event_description?: string
     created_at: string
+    event_type?: number
 }
 
 export interface IOrderDetails {
-    id: string,
+    id: number,
     order_id: string,
-    model_id: string,
-    element_size: string,
-    element_gender: string,
-    element_quantity: string,
+    model_id: number,
+    element_size: number,
+    element_gender: number,
+    element_quantity: number,
     element_description: string,
 }
 export interface IOrderDetailsDTO {
-    id: string,
+    id: number,
     order_id: string,
     model_id: Partial<IModels>,
     element_size: Partial<ILiteral>,
     element_gender: Partial<ILiteral>,
-    element_quantity: string,
+    element_quantity: number,
     element_description: string,
+}
+
+export interface initialStateOrder {
+    order_client: string,
+    order_stages: string,
+    order_description: string,
+    order_elements: IOrderDetails[]
 }

@@ -1,5 +1,5 @@
 export interface IStage {
-    id: string
+    id: number
     stage_name: string
     stage_owner: string
     created_at: string

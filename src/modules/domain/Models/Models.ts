@@ -1,6 +1,6 @@
 export interface IModels {
 
-    id: string
+    id: number
     model_name: string
     model_description: string
     created_at: string

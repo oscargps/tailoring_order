@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const EventColumns = [
     {
+        key: "event_type",
+        label: "Tipo de evento",
+    },
+    {
         key: "order_stage_from",
         label: "Etapa Anterior",
     },
@@ -15,6 +19,10 @@ const EventColumns = [
     {
         key: "created_at",
         label: "Fecha Evento",
+    },
+    {
+        key: "event_description",
+        label: "Descripción de evento",
     },
 ]
 

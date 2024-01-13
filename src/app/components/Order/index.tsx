@@ -97,7 +97,9 @@ function Orders() {
                 isStriped
                 topContent={topContent}
                 onRowAction={(key) => {
-                    const order = data.find((order: IOrder) => order.id === key)
+                    const order = data.find((order: IOrder) => {
+                        return order.id == key
+                    })
                     setSelectedOrder(order)
                     onOpen()
                 }}

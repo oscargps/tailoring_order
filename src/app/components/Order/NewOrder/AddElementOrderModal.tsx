@@ -50,7 +50,7 @@ const AddElementOrderModal = (props: Props) => {
     }, [element])
     return (
         <>
-            <Modal isOpen={isOpen} size={'lg'} onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} size={'lg'} onOpenChange={onOpenChange} placement="top">
                 <ModalContent>
                     {(onClose) => (
                         <>

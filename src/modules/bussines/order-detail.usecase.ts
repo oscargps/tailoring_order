@@ -20,9 +20,9 @@ export class OrderDetailUseCase {
     return elements ? elements.map(element => (
       {
         ...element,
-        element_size: element.element_size.literal_name || '',
-        element_gender: element.element_gender.literal_name || '',
-        model_id: element.model_id.model_name || ''
+        element_size: element.element_size.id || '',
+        element_gender: element.element_gender.id || '',
+        model_id: element.model_id.id || ''
       }
     )) : []
   }
