@@ -18,10 +18,13 @@ interface Props {
     data: Omit<IOrderDetails[], 'order_id' | 'id'>
     aditionalCollumns?: { key: string, label: string }[]
     HeaderTable?: ReactNode
+    emptyContent?: string
+    allowMultiple?: boolean
+    selectionFunction?:(e:any)=>void
 }
 
 const OrderDetailTable = (props: Props) => {
-    const { data, aditionalCollumns, HeaderTable } = props;
+    const { data, aditionalCollumns, HeaderTable, allowMultiple, emptyContent, selectionFunction } = props;
     const Literals = useFetchLiterals().data as ILiteral[];
     const Models = useFetchModels().data as IModels[]
 
@@ -48,7 +51,10 @@ const OrderDetailTable = (props: Props) => {
                 aria-label="Example static collection table"
                 isHeaderSticky
                 isStriped
+                color="primary"
+                onSelectionChange={selectionFunction}
                 topContent={HeaderTable || 'Detalle de Orden'}
+                selectionMode={allowMultiple ? "multiple" : "none"}
             >
                 <TableHeader columns={(aditionalCollumns || []).concat(OrderDetailColumns)}>
                     {(column) => <TableColumn
@@ -57,7 +63,8 @@ const OrderDetailTable = (props: Props) => {
                         {column.label}
                     </TableColumn>}
                 </TableHeader>
-                <TableBody items={data}>
+                <TableBody items={data} emptyContent={emptyContent}
+                >
                     {(item: IOrderDetails) => (
                         <TableRow key={item.id} className="h-16">
                             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

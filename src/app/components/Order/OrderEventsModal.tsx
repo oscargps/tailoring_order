@@ -66,10 +66,10 @@ const OrderEventsModal = (props: Props) => {
                                 </Table>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="danger" variant="light" onPress={onClose}>
+                                <Button color="warning"  onPress={()=>(navigate(`/update-order/${orderId}`))}>
                                     Cambiar estado
                                 </Button>
-                                <Button color="danger" variant="light" onPress={ ()=>(navigate(`/detail/${orderId}`)) }>
+                                <Button color="danger"  onPress={ ()=>(navigate(`/detail/${orderId}`)) }>
                                     Ver Detalle
                                 </Button>
                                 <Button color="primary" onPress={onClose}>

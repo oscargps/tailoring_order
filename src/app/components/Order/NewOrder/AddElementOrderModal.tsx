@@ -109,7 +109,8 @@ const AddElementOrderModal = (props: Props) => {
                                     id='element_quantity'
                                     value={element?.element_quantity}
                                     isInvalid={error}
-                                    label="Cantidad" onChange={addItem} />
+                                    label="Cantidad"
+                                    onChange={addItem} />
                                 <Input className="m-4  w-full md:w-4/6"
                                     size="sm"
                                     type="text"

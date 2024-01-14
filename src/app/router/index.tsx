@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
-import DetailOrder from '../components/Order/Detail';
+import DetailOrder from '../pages/Detail';
 import NewOrder from '../pages/NewOrder/NewOrder';
 import NewOrderReview from '../pages/NewOrder/NewOrderReview';
+import UpdateOrder from '../pages/UpdateOrder';
 
 export function AppRouter() {
   return (
@@ -30,6 +31,12 @@ export function AppRouter() {
           path="/new-order-review"
           element={(
             <NewOrderReview />
+          )}
+        />
+        <Route
+          path="/update-order/:orderId"
+          element={(
+            <UpdateOrder />
           )}
         />
 
