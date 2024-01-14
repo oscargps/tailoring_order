@@ -18,6 +18,8 @@ import { SearchIcon } from "../Icons/SearchIcon";
 import { IOrder } from "../../../modules/domain/Models/Order";
 import OrderEventsModal from "./OrderEventsModal";
 import { useNavigate } from "react-router-dom";
+import { RefreshIcon } from "../Icons/RefreshIcon";
+import { StorageHelper } from "../../../core/utils/storageHelper";
 
 function Orders() {
     const [filterValue, setFilterValue] = useState("");
@@ -55,8 +57,14 @@ function Orders() {
                         onValueChange={onSearchChange}
                     />
                     <div className="flex gap-3">
-                        <Button color="primary" endContent={<PlusIcon />} onPress={ ()=>(navigate('/new-order')) }>
+                        <Button color="primary" endContent={<PlusIcon />} onPress={() => (navigate('/new-order'))}>
                             Nueva Orden
+                        </Button>
+                        <Button color="secondary" isIconOnly onPress={() => {
+                            StorageHelper.remove('Orders')
+                            window.location.reload()
+                        }}>
+                            <RefreshIcon />
                         </Button>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 export interface IElement {
-    id: string
-    orderId: string
-    modelId: string
-    element_size: string
-    element_gender: string
-    element_quantity: string
+    id: number
+    order_id: number
+    model_id: number
+    element_size: number
+    element_gender: number
+    element_quantity: number
     element_description: string
 }

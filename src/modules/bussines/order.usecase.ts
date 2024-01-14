@@ -17,49 +17,65 @@ export class OrderUseCase {
   async createOrder(RequestService: OrderService, order: initialStateOrder) {
     return new Promise(async (resolve, reject) => {
       try {
-        const res = await RequestService.createOrder(order)
-        resolve(res)
+        const res = await RequestService.createOrder(order);
+        resolve(res);
       } catch (error) {
-        reject(error)
+        reject(error);
       }
-    })
+    });
   }
 
   async getOrders(RequestService: OrderService) {
-    const savedOrders = StorageHelper.get('Orders')
+    const savedOrders = StorageHelper.get("Orders");
     if (savedOrders) {
-      const data = await this.mapOrders(savedOrders) as IOrder[]
-      return data
+      const data = (await this.mapOrders(savedOrders)) as IOrder[];
+      return data;
     } else {
       this.orders = await RequestService.getOrders();
-      StorageHelper.save('Orders', this.orders);
-      const mappedOrders = await this.mapOrders(this.orders)
+      StorageHelper.save("Orders", this.orders);
+      const mappedOrders = await this.mapOrders(this.orders);
       return mappedOrders;
     }
   }
 
   private async mapOrders(orders: IOrderDto[] | null): Promise<IOrder[]> {
 
-    const stages = await CommonDataController.getStages() as IStage[]
-    const Literals = await CommonDataController.getLiterals() as ILiteral[]
-    return orders ? orders.map(order => (
-      {
-        ...order,
-        order_client: order.clients.client_name || '',
-        order_client_id: order.clients.id || '',
-        order_stage_id: order.clients.id || '',
-        order_stage: order.stages.stage_name || '',
-        created_at: FormatDate(order.created_at),
-        order_by_event: order.order_by_event?.map((orderEvent) => ({
-          ...orderEvent,
-          event_type: Literals.find(literal => literal.id === orderEvent.event_type)?.literal_name,
-          order_stage_to: stages.find(stage => stage.id === orderEvent.order_stage_to)?.stage_name,
-          order_stage_from: stages.find(stage => stage.id === orderEvent.order_stage_from)?.stage_name,
-          created_at: FormatDate(orderEvent.created_at)
+    const stages = (await CommonDataController.getStages()) as IStage[];
+    const Literals = (await CommonDataController.getLiterals()) as ILiteral[];
+    return orders
+      ? orders.map((order) => ({
+          ...order,
+          order_client: order.clients.client_name || "",
+          order_client_id: order.clients.id || "",
+          order_stage_id: order.clients.id || "",
+          order_stage: order.stages.stage_name || "",
+          created_at: FormatDate(order.created_at),
+          order_by_event: order.order_by_event?.map((orderEvent) => ({
+            ...orderEvent,
+            event_type: Literals.find(
+              (literal) => literal.id === orderEvent.event_type
+            )?.literal_name,
+            order_stage_to: stages.find(
+              (stage) =>
+                stage.id ===
+                order.order_by_stages?.find(
+                  (order_by_stage) =>
+                    order_by_stage.id == orderEvent.order_stage_to
+                )?.stage_id
+            )?.stage_name,
+            order_stage_from: orderEvent.order_stage_from
+              ? stages.find(
+                  (stage) =>
+                    stage.id ===
+                    order.order_by_stages?.find(
+                      (order_by_stage) =>
+                        order_by_stage.id == orderEvent.order_stage_from
+                    )?.stage_id
+                )?.stage_name
+              : "",
+            created_at: FormatDate(orderEvent.created_at),
+          })),
         }))
-      }
-    )) : []
+      : [];
   }
-
 }
-

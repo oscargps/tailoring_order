@@ -1,8 +1,8 @@
 
 
-import { useFetchOrderDetail } from "../../hooks/useOrderDetail";
+import { useFetchOrderDetail } from "../hooks/useOrderDetail";
 import { useParams } from "react-router-dom";
-import OrderDetailTable from "./OrderDetailTable";
+import OrderDetailTable from "../components/Order/OrderDetailTable";
 
 function DetailOrder() {
 

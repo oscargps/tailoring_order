@@ -1,7 +1,9 @@
 import { IClient } from "./Clients";
+import { IElement } from "./Elements";
+import { IEvent } from "./Events";
 import { ILiteral } from "./Literals";
 import { IModels } from "./Models";
-import { IStage } from "./Stages";
+import { IOrderByStage, IStage } from "./Stages";
 
 export interface IOrder {
     id: string,
@@ -26,6 +28,7 @@ export interface IOrderDto {
     clients: Partial<IClient>
     stages: Partial<IStage>
     order_by_event?: IOrderByEvent[]
+    order_by_stages?: Partial<IOrderByStage>[]
 }
 
 interface IOrderByEvent {
@@ -63,4 +66,13 @@ export interface initialStateOrder {
     order_stages: string,
     order_description: string,
     order_elements: IOrderDetails[]
+}
+
+export interface IElementByStage {
+    order_id:         number;
+    element_quantity: number;
+    element_id:       Partial<IElement>;
+    order_stage_id:   Partial<IOrderByStage>;
+    last_event_id:    Partial<IEvent>;
+    order_by_stages: Partial<IOrderByStage>;
 }
