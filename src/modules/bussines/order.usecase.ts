@@ -44,38 +44,38 @@ export class OrderUseCase {
     const Literals = (await CommonDataController.getLiterals()) as ILiteral[];
     return orders
       ? orders.map((order) => ({
-          ...order,
-          order_client: order.clients.client_name || "",
-          order_client_id: order.clients.id || "",
-          order_stage_id: order.clients.id || "",
-          order_stage: order.stages.stage_name || "",
-          created_at: FormatDate(order.created_at),
-          order_by_event: order.order_by_event?.map((orderEvent) => ({
-            ...orderEvent,
-            event_type: Literals.find(
-              (literal) => literal.id === orderEvent.event_type
-            )?.literal_name,
-            order_stage_to: stages.find(
+        ...order,
+        order_client: order.clients.client_name || "",
+        order_client_id: order.clients.id || "",
+        order_stage_id: order.clients.id || "",
+        order_stage: order.stages.stage_name || "",
+        created_at: FormatDate(order.created_at),
+        order_by_event: order.order_by_event?.map((orderEvent) => ({
+          ...orderEvent,
+          event_type: Literals.find(
+            (literal) => literal.id === orderEvent.event_type
+          )?.literal_name,
+          order_stage_to: stages.find(
+            (stage) =>
+              stage.id ===
+              order.order_by_stages?.find(
+                (order_by_stage) =>
+                  order_by_stage.id == orderEvent.order_stage_to
+              )?.stage_id
+          )?.stage_name,
+          order_stage_from: orderEvent.order_stage_from
+            ? stages.find(
               (stage) =>
                 stage.id ===
                 order.order_by_stages?.find(
                   (order_by_stage) =>
-                    order_by_stage.id == orderEvent.order_stage_to
+                    order_by_stage.id == orderEvent.order_stage_from
                 )?.stage_id
-            )?.stage_name,
-            order_stage_from: orderEvent.order_stage_from
-              ? stages.find(
-                  (stage) =>
-                    stage.id ===
-                    order.order_by_stages?.find(
-                      (order_by_stage) =>
-                        order_by_stage.id == orderEvent.order_stage_from
-                    )?.stage_id
-                )?.stage_name
-              : "",
-            created_at: FormatDate(orderEvent.created_at),
-          })),
-        }))
+            )?.stage_name
+            : "",
+          created_at: FormatDate(orderEvent.created_at),
+        })),
+      }))
       : [];
   }
 }

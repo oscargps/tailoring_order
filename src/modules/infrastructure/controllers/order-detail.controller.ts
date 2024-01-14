@@ -11,5 +11,10 @@ export class OrderDetailController {
         OrderDetailController.orderDetailUseCase = new OrderDetailUseCase();
         return OrderDetailController.orderDetailUseCase.getOrders(OrderDetailController.orderDetailService, orderId);
     }
+    getElementsByStage(orderId: string) {
+        OrderDetailController.orderDetailService = new OrderDetailService();
+        OrderDetailController.orderDetailUseCase = new OrderDetailUseCase();
+        return OrderDetailController.orderDetailUseCase.getElementsByStage(OrderDetailController.orderDetailService, orderId);
+    }
 
 }

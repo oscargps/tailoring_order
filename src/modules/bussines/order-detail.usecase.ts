@@ -15,6 +15,10 @@ export class OrderDetailUseCase {
     return mappedOrders;
   }
 
+  async getElementsByStage (RequestService: OrderDetailService, orderId: string) {
+    return await RequestService.getElementsByStage(orderId);
+  }
+
   private mapElements(elements: IOrderDetailsDTO[] | null): IOrderDetails[] {
 
     return elements ? elements.map(element => (

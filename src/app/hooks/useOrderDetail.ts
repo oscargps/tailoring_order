@@ -14,3 +14,14 @@ export const useFetchOrderDetail = (orderId: string) => {
       retry: false,
     });
 }
+export const useFetchelementsByStage = (orderId: string) => {
+  const getData = () => orderDetailController.getElementsByStage(orderId);
+
+  return useQuery(['ElementsBystage'], () => getData(),
+    {
+      staleTime: 10000,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retry: false,
+    });
+}
