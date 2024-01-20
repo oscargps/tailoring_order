@@ -4,39 +4,62 @@ import DetailOrder from '../pages/Detail';
 import NewOrder from '../pages/NewOrder/NewOrder';
 import NewOrderReview from '../pages/NewOrder/NewOrderReview';
 import UpdateOrder from '../pages/UpdateOrder';
+import Login from '../pages/Login/Login';
+import Header from '../components/Header';
 
 export function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
         <Route
+          path="/"
+          element={(
+            <Login />
+          )}
+        />
+        <Route
           path="/dashboard"
           element={(
-            <Dashboard />
+            <>
+              <Header />
+              <Dashboard />
+            </>
           )}
         />
         <Route
           path="/detail/:orderId"
           element={(
-            <DetailOrder />
+            <>
+              <Header />
+              <DetailOrder />
+            </>
           )}
         />
         <Route
           path="/new-order"
           element={(
-            <NewOrder />
+            <>
+              <Header />
+              <NewOrder />
+            </>
           )}
         />
         <Route
           path="/new-order-review"
           element={(
-            <NewOrderReview />
+            <>
+              <Header />
+              <NewOrderReview />
+            </>
           )}
         />
         <Route
           path="/update-order/:orderId"
           element={(
-            <UpdateOrder />
+            <>
+              <Header />
+              <UpdateOrder />
+            </>
           )}
         />
 

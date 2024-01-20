@@ -27,4 +27,8 @@ export class StorageHelper {
         localStorage.setItem(key, dataToSave);
     }
 
+    static clear() {
+        localStorage.clear();
+    }
+
 }

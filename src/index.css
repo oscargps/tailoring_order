@@ -28,19 +28,18 @@ input[type=number] {
 }
 
 .MainApp {
-  margin: 50px 0;
   display: flex;
+  flex-direction: column;
   justify-content: start;
-  padding: 40px 200px;
+  padding: 60px 10px;
   min-width: 320px;
   min-height: 100vh;
   color: #213547;
-  flex-direction: column;
 }
 
 @media (max-width: 1024px) {
   .MainApp {
-    padding: 0 10px;
+    padding: 40px 10px;
   }
 }
 /* @media (prefers-color-scheme: light) {
