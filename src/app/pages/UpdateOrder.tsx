@@ -12,10 +12,12 @@ import { useEffect, useMemo, useState } from "react";
 import { IOrderByStage, IStage } from "../../modules/domain/Models/Stages";
 import { useFetchLiterals, useFetchStages } from "../hooks/useCommonData";
 import ArrowRightIcon from "../components/Icons/ArrowRightIcon";
-import { IOrderDetails } from "../../modules/domain/Models/Order";
+import { IOrder, IOrderData, IOrderDetails } from "../../modules/domain/Models/Order";
 import UpdateOrderModal from "../components/Order/UpdateOrderModal";
 import { Toaster, toast } from "sonner";
 import { ILiteral } from "../../modules/domain/Models/Literals";
+import { StorageHelper } from "../../core/utils/storageHelper";
+import { useUpdateOrder } from "../hooks/useOrders";
 
 const UpdateOrder = () => {
     let { orderId } = useParams();
@@ -26,24 +28,27 @@ const UpdateOrder = () => {
     const [mappedElements, setMappedElements] = useState<IOrderDetails[]>([]);
     const [mappedStages, setMappedStages] = useState<IOrderByStage[]>([]);
 
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
     const Stages = useFetchStages().data as IStage[];
     const Literals = useFetchLiterals().data as ILiteral[];
     const { data } = useFetchelementsByStage(orderId as string);
+    const actualOrder = (StorageHelper.get("Orders") as IOrder[]).find(
+        (order) => order.id == orderId
+    );
+
+    const { mutate, isLoading, isError, isSuccess } = useUpdateOrder()
 
     useEffect(() => {
         if (data) {
             let mappedStages = {};
-            data.forEach((elementByStage) => {
-                if (elementByStage.order_by_stages.id) {
+            actualOrder?.order_by_stages.forEach((order_by_stage) => {
+                if (order_by_stage.id) {
                     mappedStages = {
                         ...mappedStages,
-                        [elementByStage?.order_by_stages?.id]:
-                            elementByStage.order_by_stages,
+                        [order_by_stage?.id]: order_by_stage,
                     };
                 }
             });
-
             setMappedStages(Object.values(mappedStages));
 
             const mappedElements = data
@@ -60,10 +65,32 @@ const UpdateOrder = () => {
         }
     }, [data, selectedStageFrom, Stages]);
 
+    useEffect(() => {
+        if(!isLoading){
+            if(isSuccess){
+                if(isOpen) onClose()
+                setSelectedStageFrom('')
+                toast.success("Orden Actualizada!");
+                setTimeout(() =>{
+                    StorageHelper.remove('Orders')
+                    window.location.assign('/dashboard')
+                },2000)
+            }
+            if(isError){
+                toast.error("Hubo un error!");
+            }
+        }
+    },[isLoading])
+
+
     const validate = (data: Record<number, number>) => {
         const updatedElements = Object.entries(data);
         let validate = false;
-        if (updatedElements.length && !(updatedElements.some(e => e[1] == 0)) && (updatedElements.length == selectedRows.length)) {
+        if (
+            updatedElements.length &&
+            !updatedElements.some((e) => e[1] == 0) &&
+            updatedElements.length == selectedRows.length
+        ) {
             validate = updatedElements.every((updatedElement) => {
                 const updatedElementId = updatedElement[0];
                 const updatedElementQty = updatedElement[1];
@@ -83,36 +110,36 @@ const UpdateOrder = () => {
             toast.error("Error validando cantidades");
         }
         if (validate) {
-            send(data)
+            send(data);
         }
     };
 
     const send = (data?: Record<number, number> | any) => {
-        if ((selectedStageFrom == selectedStageTo) || !selectedStageTo) {
+        if (selectedStageFrom == selectedStageTo || !selectedStageTo) {
             toast.error("Selecciona un nuevo proceso valido");
         } else {
-            const dataToSend = {
+            const dataToSend: IOrderData = {
                 order_id: parseInt(orderId as string),
                 stage_to: parseInt(selectedStageTo),
                 stage_from: parseInt(selectedStageFrom),
-                event_type: Literals.find(literal => literal.literal_name == (isTotal ? "Total" : "Parcial"))?.id,
-                elements: []
-            }
+                event_type: Literals.find(
+                    (literal) => literal.literal_name == (isTotal ? "Total" : "Parcial")
+                )?.id || 0,
+                elements: [],
+            };
             if (data && !isTotal) {
-                dataToSend.elements = selectedRows.map(elem => ({
+                dataToSend.elements = selectedRows.map((elem) => ({
                     element_id: parseInt(elem),
-                    element_new_quantity: data[elem]
-                }))
+                    element_new_quantity: data[elem],
+                }));
             } else {
-                dataToSend.elements = mappedElements.map(elem => ({
+                dataToSend.elements = mappedElements.map((elem) => ({
                     element_id: elem.id,
-                    element_new_quantity: elem.element_quantity
-                }))
-                
+                    element_new_quantity: elem.element_quantity,
+                }));
             }
+            mutate(dataToSend)
         }
-
-
     };
 
     const setSelectionRows = (selectedRows: string | string[]) => {
@@ -228,7 +255,7 @@ const UpdateOrder = () => {
                             className="m-4 w-full md:w-2/6"
                             color="success"
                             size="lg"
-                            isDisabled={!Boolean(selectedStageFrom)}
+                            isDisabled={!Boolean(selectedStageFrom) || isLoading}
                             onPress={isTotal ? send : onOpen}
                         >
                             {isTotal ? "Confirmar" : "Continuar"}

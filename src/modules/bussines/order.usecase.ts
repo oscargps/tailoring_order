@@ -1,8 +1,7 @@
-import { literal } from "zod";
 import { FormatDate } from "../../core/utils/DateTimeHelpers";
 import { StorageHelper } from "../../core/utils/storageHelper";
 import { ILiteral } from "../domain/Models/Literals";
-import { IOrder, IOrderDto, initialStateOrder } from "../domain/Models/Order";
+import { IOrder, IOrderData, IOrderDto, initialStateOrder } from "../domain/Models/Order";
 import { IStage } from "../domain/Models/Stages";
 import { CommonDataController } from "../infrastructure/controllers/common-data.controller";
 import { OrderService } from "../infrastructure/services/orders.service";
@@ -18,6 +17,16 @@ export class OrderUseCase {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await RequestService.createOrder(order);
+        resolve(res);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  async updateOrder(RequestService: OrderService, orderData: IOrderData) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await RequestService.updateOrder(orderData);
         resolve(res);
       } catch (error) {
         reject(error);

@@ -1,5 +1,5 @@
 import { OrderUseCase } from "../../bussines/order.usecase";
-import { initialStateOrder } from "../../domain/Models/Order";
+import { IOrderData, initialStateOrder } from "../../domain/Models/Order";
 import { OrderService } from "../services/orders.service";
 export class OrderController {
 
@@ -19,6 +19,19 @@ export class OrderController {
                 OrderController.orderService = new OrderService();
                 OrderController.orderUseCase = new OrderUseCase();
                 const result = await OrderController.orderUseCase.createOrder(OrderController.orderService, order);
+                resolve(result);
+            }
+            catch (err) {
+                reject(err)
+            }
+        })
+    }
+    async updateOrder(orderData: IOrderData) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                OrderController.orderService = new OrderService();
+                OrderController.orderUseCase = new OrderUseCase();
+                const result = await OrderController.orderUseCase.updateOrder(OrderController.orderService, orderData);
                 resolve(result);
             }
             catch (err) {

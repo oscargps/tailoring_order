@@ -1,6 +1,6 @@
 
 import { SupaBaseClient } from "../../../core/utils/supabaseClient";
-import { IOrderDto, initialStateOrder } from "../../domain/Models/Order";
+import { IOrderData, IOrderDto, initialStateOrder } from "../../domain/Models/Order";
 
 
 export class OrderService {
@@ -54,7 +54,23 @@ export class OrderService {
                 reject(error)
             }
         })
+    }
+    async updateOrder(orderData: IOrderData) {
+        return new Promise(async (resolve, reject) => {
 
+            try {
+                const { data, error } = await this.supabaseClient.client.functions.invoke('update-order', {
+                    body: { dataRq: orderData },
+                });
+                if (error) {
+                    reject(error)
+                } else {
+                    resolve(data)
+                }
+            } catch (error) {
 
+                reject(error)
+            }
+        })
     }
 }
