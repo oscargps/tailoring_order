@@ -26,10 +26,8 @@ const Header = () => {
                         window.location.assign("/dashboard");
                     }}
                 >
-                    Ordenes{" "}
+                    Inicio
                 </div>
-                <Divider className="bg-white" orientation="vertical" />
-                <div>Docs </div>
                 <Divider className="bg-white" orientation="vertical" />
 
                 <Dropdown>

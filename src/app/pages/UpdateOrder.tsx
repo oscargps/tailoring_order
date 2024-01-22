@@ -255,6 +255,7 @@ const UpdateOrder = () => {
                             className="m-4 w-full md:w-2/6"
                             color="success"
                             size="lg"
+                            isLoading={isLoading}
                             isDisabled={!Boolean(selectedStageFrom) || isLoading}
                             onPress={isTotal ? send : onOpen}
                         >

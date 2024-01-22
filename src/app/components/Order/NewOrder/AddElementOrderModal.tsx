@@ -39,11 +39,15 @@ const AddElementOrderModal = (props: Props) => {
         try {
             setError(false)
             Element.parse(element)
-            addElementFunction(element)
-            setElement({
-                ...element,
-                element_quantity: initialStateElement.element_quantity
-            })
+            if(element?.element_quantity > 0){
+                addElementFunction(element)
+                setElement({
+                    ...element,
+                    element_quantity: initialStateElement.element_quantity
+                })
+            }else{
+                throw('')
+            }
         } catch (error) {
             setError(true)
         }
@@ -59,7 +63,6 @@ const AddElementOrderModal = (props: Props) => {
                                 <Select
                                     name="model_id"
                                     label="Modelo"
-                                    variant="underlined"
                                     placeholder="Seleccione un modelo"
                                     className="max-w-xs m-4"
                                     onChange={addItem}
@@ -74,7 +77,6 @@ const AddElementOrderModal = (props: Props) => {
                                 </Select>
                                 <Select
                                     label="Genero"
-                                    variant="underlined"
                                     className="max-w-xs m-4"
                                     name="element_gender"
                                     onChange={addItem}
@@ -89,7 +91,6 @@ const AddElementOrderModal = (props: Props) => {
                                 </Select>
                                 <Select
                                     label="Talla"
-                                    variant="underlined"
                                     className="max-w-xs m-4"
                                     name="element_size"
                                     onChange={addItem}
@@ -105,9 +106,12 @@ const AddElementOrderModal = (props: Props) => {
                                 </Select>
                                 <Input className="m-4 w-full md:w-4/6 "
                                     size="sm"
-                                    type="text"
+                                    type="number"
+                                    isRequired
                                     id='element_quantity'
-                                    value={element?.element_quantity}
+                                    value={(element?.element_quantity)?.toString()}
+                                    inputMode="numeric"
+                                    pattern="[0-9\s]{13,19}"
                                     isInvalid={error}
                                     label="Cantidad"
                                     onChange={addItem} />

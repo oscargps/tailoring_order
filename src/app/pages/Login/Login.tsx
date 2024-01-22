@@ -27,8 +27,9 @@ const Login = () => {
 
   if (!session) {
     return (
-      <div className=" w-full md:w-2/6 m-auto overflow-y-hidden">
-
+      <div className=" w-full md:w-2/6 m-auto overflow-y-hidden flex flex-col justify-between">
+        <img src="../../../../public/sewing-machine-green.png" alt="" className="h-40 w-40 self-center" />
+        <h1 className="self-center mb-4">Gestión de pedidos de confección</h1>
         <Auth
           // theme="dark"
           supabaseClient={supabase.client}
@@ -39,7 +40,19 @@ const Login = () => {
           }}
           providers={[]}
           redirectTo="/dashboard"
-
+          showLinks={false}
+          localization={{
+            variables: {
+              sign_in: {
+                email_label: 'Correo electrónico',
+                password_label: 'Contraseña',
+                email_input_placeholder: '',
+                password_input_placeholder: '',
+                button_label: "Ingresar",
+                loading_button_label:"Ingresando..."
+              },
+            },
+          }}
         />
       </div>
     );

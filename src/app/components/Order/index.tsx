@@ -49,7 +49,7 @@ function Orders() {
                 <div className="flex justify-between gap-3 items-end">
                     <Input
                         isClearable
-                        className="w-full sm:max-w-[44%]"
+                        className="w-full sm:max-w-[50%]"
                         placeholder="Search by name..."
                         startContent={<SearchIcon />}
                         value={filterValue}
@@ -57,8 +57,8 @@ function Orders() {
                         onValueChange={onSearchChange}
                     />
                     <div className="flex gap-3">
-                        <Button color="primary" endContent={<PlusIcon />} onPress={() => (navigate('/new-order'))}>
-                            Nueva Orden
+                        <Button color="primary" isIconOnly onPress={() => (navigate('/new-order'))}>
+                        <PlusIcon />
                         </Button>
                         <Button color="secondary" isIconOnly onPress={() => {
                             StorageHelper.remove('Orders')
@@ -111,6 +111,9 @@ function Orders() {
                     setSelectedOrder(order)
                     onOpen()
                 }}
+                classNames={{
+                    base: "overflow-hidden",
+                  }}
             >
                 <TableHeader columns={OrderColumns}>
                     {(column) => <TableColumn
