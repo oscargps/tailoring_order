@@ -27,7 +27,7 @@ function DetailOrder() {
             <Button
                 color="warning"
                 size="lg"
-                className="m-4"
+                className=" w-full md:w-3/6 m-4"
                 onPress={() => navigate(`/update-order/${orderId}`)}
             >
                 Cambiar estado
