@@ -1,5 +1,9 @@
 export const OrderColumns = [
     {
+        key: "id",
+        label: "Id",
+    },
+    {
         key: "order_client",
         label: "Cliente",
     },
