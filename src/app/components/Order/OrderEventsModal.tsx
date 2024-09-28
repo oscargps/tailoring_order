@@ -9,6 +9,10 @@ const EventColumns = [
         label: "Tipo de evento",
     },
     {
+        key: "quantity",
+        label: "Cantidad",
+    },
+    {
         key: "order_stage_from",
         label: "Etapa Anterior",
     },
@@ -38,7 +42,7 @@ const OrderEventsModal = (props: Props) => {
 
     return (
         <>
-            <Modal isOpen={isOpen} size={'5xl'} onOpenChange={onOpenChange}>
+            <Modal isOpen={isOpen} size={'4xl'} onOpenChange={onOpenChange}>
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -46,8 +50,11 @@ const OrderEventsModal = (props: Props) => {
                             <ModalBody>
                                 <Table
                                     aria-label="Example static collection table"
-                                    isHeaderSticky
                                     isStriped
+                                    classNames={{
+                                        base: "max-h-[80%] overflow-scroll overflow-hidden",
+                                        table:"overflow-hidden"
+                                      }}
                                 >
                                     <TableHeader columns={EventColumns}>
                                         {(column) => <TableColumn
@@ -69,10 +76,10 @@ const OrderEventsModal = (props: Props) => {
                                 <Button color="warning"  onPress={()=>(navigate(`/update-order/${orderId}`))}>
                                     Cambiar estado
                                 </Button>
-                                <Button color="danger"  onPress={ ()=>(navigate(`/detail/${orderId}`)) }>
+                                <Button color="primary"  onPress={ ()=>(navigate(`/detail/${orderId}`)) }>
                                     Ver Detalle
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <Button color="danger" onPress={onClose}>
                                     Cerrar
                                 </Button>
                             </ModalFooter>

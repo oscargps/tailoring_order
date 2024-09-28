@@ -131,12 +131,11 @@ const NewOrder = () => {
                 {Clients && <Select
                     label="Cliente"
                     name="order_client"
-                    variant="underlined"
                     isMultiline={true}
                     onChange={addItem}
                     defaultSelectedKeys={orderData.order_client}
                     classNames={{
-                        base: "max-w-xs m-4",
+                        base: "w-full  m-4",
                         trigger: "min-h-unit-20 py-2",
                     }}
                 >
@@ -150,13 +149,12 @@ const NewOrder = () => {
                     items={Stages}
                     label="Etapas"
                     name="order_stages"
-                    variant="underlined"
                     isMultiline={true}
                     selectionMode="multiple"
                     onChange={addItem}
                     defaultSelectedKeys={orderData.order_stages}
                     classNames={{
-                        base: "max-w-xs m-4",
+                        base: "w-full m-4",
                         trigger: "min-h-unit-20 py-2",
                     }}
                     renderValue={(items: SelectedItems<IStage>) => {

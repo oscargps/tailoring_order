@@ -11,7 +11,7 @@ export interface IOrder {
     order_client: string,
     order_stage_id: string,
     order_stage: string,
-    order_owner: string,
+    order_owner: number,
     order_release: string | null,
     order_description: string,
     created_at: string,
@@ -31,6 +31,7 @@ export interface IOrderDto {
     stages: Partial<IStage>
     order_by_event?: IOrderByEvent[]
     order_by_stages?: Partial<IOrderByStage>[]
+    elements_by_event?: Partial<IElementByEvent>[]
 }
 
 interface IOrderByEvent {
@@ -42,6 +43,7 @@ interface IOrderByEvent {
     event_description?: string
     created_at: string
     event_type?: number
+    quantity?: number
 }
 
 export interface IOrderDetails {
@@ -77,6 +79,15 @@ export interface IElementByStage {
     order_stage_id: Partial<IOrderByStage>;
     last_event_id: Partial<IEvent>;
     order_by_stages: Partial<IOrderByStage>;
+}
+export interface IElementByEvent {
+    created_at: string
+    element_id: number
+    element_quantity: number
+    event_id: number
+    id: number
+    order_id: number
+    order_stage_id: number
 }
 
 export interface IOrderData {

@@ -27,7 +27,8 @@ export class OrderService {
             clients ( id, client_name ),
             stages ( id, stage_name),
             order_by_stages (*),
-            order_by_event (*)
+            order_by_event (*),
+            elements_by_event (*)
             `).throwOnError();
             return data as IOrderDto[];
         } catch (error) {
