@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+html,
+body {
+  height: 100%;
+}
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -31,9 +34,7 @@ input[type=number] {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  padding: 60px 10px;
   min-width: 320px;
-  min-height: 100vh;
   color: #213547;
 }
 
